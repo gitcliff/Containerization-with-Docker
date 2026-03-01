@@ -1,0 +1,102 @@
+# 📦 SUMMARY  
+# This Docker Compose file defines a multi-container application consisting of a custom app,  
+# MongoDB as a database, and Mongo Express as a web-based MongoDB admin interface.  
+# Language/Platform: YAML for Docker Compose (v3)  
+# What you'll learn: Docker services, container networking, environment variables, volumes  
+# Outcome: Running containers for your app, MongoDB, and Mongo Express, all networked together  
+# Why this matters: This setup is commonly used for local development and testing microservices with a database  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Compose File Version  
+# ------------------------------  
+version: '3'  
+# ✅ What it does: Specifies Docker Compose file format version 3  
+# 🧠 Why it matters: Ensures compatibility with Docker Engine and Compose features in v3  
+
+# ------------------------------  
+# ⚙️ SECTION TITLE: Define Services (Containers)  
+# ------------------------------  
+services:  
+  # ✅ What it does: Defines multiple containers as part of one app stack  
+  # 🧠 Why it matters: Allows you to manage all containers together (start/stop/build)  
+
+  my-app:  
+    image: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/my-app:1.0  
+    # ✅ What it does: Uses a pre-built Docker image for your custom app from AWS ECR  
+    # 🧠 Why it matters: Lets Compose pull your app image directly from AWS Elastic Container Registry  
+    ports:  
+      - 3000:3000  
+      # ✅ What it does: Maps port 3000 on your host to port 3000 in the container  
+      # 🧠 Why it matters: Makes your app accessible at http://localhost:3000  
+
+  mongodb:  
+    image: mongo  
+    # ✅ What it does: Pulls the official MongoDB image from Docker Hub  
+    # 🧠 Why it matters: Adds a MongoDB database container to your stack  
+    ports:  
+      - 27017:27017  
+      # ✅ What it does: Maps MongoDB’s default port to the host  
+      # 🧠 Why it matters: Allows local tools or other containers to connect to MongoDB  
+    environment:  
+      - MONGO_INITDB_ROOT_USERNAME=admin  
+      - MONGO_INITDB_ROOT_PASSWORD=<REDACTED_PASSWORD>  
+      # ✅ What it does: Sets root username and password for MongoDB on startup  
+      # 🧠 Why it matters: Required for MongoDB authentication  
+    volumes:  
+      - mongo-data:/data/db  
+      # ✅ What it does: Mounts a named volume ("mongo-data") to persist MongoDB data  
+      # 🧠 Why it matters: Keeps your database data even if the container is recreated  
+
+  mongo-express:  
+    image: mongo-express  
+    restart: always  
+    # ✅ What it does: Uses the official Mongo Express image and restarts on failure  
+    # 🧠 Why it matters: Provides a web UI to view and manage MongoDB data  
+    ports:  
+      - 8081:8081  
+      # ✅ What it does: Maps Mongo Express’s web UI to http://localhost:8081  
+      # 🧠 Why it matters: Enables you to access MongoDB through a browser  
+    environment:  
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin  
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=<REDACTED_PASSWORD>  
+      - ME_CONFIG_MONGODB_SERVER=mongodb  
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:<REDACTED_PASSWORD>@mongodb:27017  
+      # ✅ What it does: Configures Mongo Express to connect to the MongoDB container securely  
+      # 🧠 Why it matters: Ensures Mongo Express has credentials to access the MongoDB instance  
+    depends_on:  
+      - "mongodb"  
+      # ✅ What it does: Ensures MongoDB starts before Mongo Express  
+      # 🧠 Why it matters: Prevents connection errors if Mongo Express starts too early  
+
+# ------------------------------  
+# 📦 SECTION TITLE: Define Persistent Volumes  
+# ------------------------------  
+volumes:  
+  mongo-data:  
+    driver: local  
+    # ✅ What it does: Creates a named Docker volume using the local driver  
+    # 🧠 Why it matters: Used by MongoDB to store database files outside the container’s filesystem  
+
+# ------------------------------  
+# ▶️ HOW TO RUN / EXECUTE THIS CODE  
+# ------------------------------  
+# docker-compose up -d  
+# ✅ What it does: Starts all services in detached mode (runs in background)  
+# 🧠 Why it matters: Boots your app, MongoDB, and Mongo Express all at once  
+# 🔄 Equivalent PowerShell command: docker-compose up -d (identical)  
+
+# docker-compose down  
+# ✅ What it does: Stops and removes all containers, networks, and volumes (but keeps data volumes unless --volumes is used)  
+# 🧠 Why it matters: Cleanly shuts down the stack when you're done  
+# 🔄 Equivalent Bash command: docker-compose down (identical)  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Replace <AWS_ACCOUNT_ID> with your actual AWS account ID (keep private).  
+# - Replace <REDACTED_PASSWORD> with a strong password. Do NOT hardcode passwords in production; use Docker secrets or environment files.  
+# - Mongo Express is for development/testing only; avoid using in production environments.  
+# - Ensure `docker-compose` is installed:  
+#     - Linux/macOS: sudo apt install docker-compose or brew install docker-compose  
+#     - Windows: Comes with Docker Desktop  
+# - Check container logs with `docker-compose logs -f` for debugging.  
