@@ -1,0 +1,48 @@
+# 📦 SUMMARY  
+# This Docker Compose YAML snippet defines a MongoDB service with persistent storage using a Docker volume.  
+# Language/Platform: Docker Compose YAML  
+# What you'll learn: Defining named volumes, configuring a MongoDB container, exposing ports, setting environment variables  
+# Outcome: A MongoDB container runs with persistent data stored locally, accessible on port 27017  
+# Why this matters: Preserves database data across container restarts and allows secure initialization with credentials  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Define Persistent Volume  
+# ------------------------------  
+volumes:  
+  mongo-data:  
+    driver: local  
+    # ✅ What it does: Creates a named Docker volume called "mongo-data" using the local driver  
+    # 🧠 Why it matters: Stores MongoDB data persistently on the host machine, so data is not lost if the container stops or is removed  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Define MongoDB Service  
+# ------------------------------  
+mongodb:  
+  image: mongo  
+  # ✅ What it does: Uses the official MongoDB Docker image from Docker Hub  
+  # 🧠 Why it matters: Provides a ready-to-use MongoDB server environment without manual installation  
+
+  ports:  
+    - 27017:27017  
+    # ✅ What it does: Maps port 27017 on the host to port 27017 inside the container  
+    # 🧠 Why it matters: Allows applications on the host or other containers to connect to MongoDB via the default MongoDB port  
+
+  environment:  
+    - MONGO_INITDB_ROOT_USERNAME=admin  
+    - MONGO_INITDB_ROOT_PASSWORD=pass  
+    # ✅ What it does: Sets environment variables to create the MongoDB root user with username "admin" and password "pass"  
+    # 🧠 Why it matters: Secures MongoDB access with authentication, important for preventing unauthorized access  
+
+  volumes:  
+    - mongo-data:/data/db  
+    # ✅ What it does: Mounts the named volume "mongo-data" to the container's data directory (/data/db) where MongoDB stores its data files  
+    # 🧠 Why it matters: Ensures MongoDB data is saved persistently outside the container lifecycle  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Change MONGO_INITDB_ROOT_PASSWORD to a strong, secret password in production environments.  
+# - The "local" volume driver stores data on your machine, so deleting the volume will delete your database data.  
+# - Use `docker volume ls` and `docker volume rm mongo-data` to manage Docker volumes.  
+# - To connect to MongoDB from another container in the same Docker network, use the service name "mongodb" as the hostname.  
+# - Remember to restart your containers if you change environment variables or volume configurations.  

@@ -1,0 +1,70 @@
+# 📦 SUMMARY  
+# These commands demonstrate how to inspect and interact with Docker internals and containers by entering the host's namespaces, listing Docker volumes, and accessing container filesystems.  
+# Language/Platform: Docker CLI (Linux/bash & PowerShell), Debian shell inside Docker  
+# What you'll learn: Using `docker run` with namespaces, exploring Docker volume storage, running commands inside containers  
+# Outcome: Gain shell access to Docker host environment and running containers for troubleshooting or inspection  
+# Why this matters: Provides deep debugging ability for Docker users, helpful in complex container setups or when troubleshooting data persistence issues  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Enter Host Namespaces with a Privileged Container  
+# ------------------------------  
+docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i  
+# ✅ What it does: Starts an interactive Debian container with privileged access and enters the host's PID 1 namespaces (mount, UTS, network, IPC) using `nsenter`  
+# 🧠 Why it matters: Gives you a shell inside the host's environment from the container, allowing inspection of Docker’s host filesystem and processes  
+# 🔄 Equivalent PowerShell: Same command runs in PowerShell assuming Docker is installed and running; ensure to run with admin rights
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Open a Shell in the Entered Environment  
+# ------------------------------  
+sh  
+# ✅ What it does: Opens a basic shell prompt inside the Debian container with host namespaces  
+# 🧠 Why it matters: Allows you to run further commands on the host filesystem or inspect Docker directories
+
+# ------------------------------  
+# 🧩 SECTION TITLE: List Docker Data Directory Contents  
+# ------------------------------  
+ls /var/lib/docker/  
+# ✅ What it does: Lists contents of Docker's default storage directory on the host, where container data, images, and volumes are stored  
+# 🧠 Why it matters: Useful for verifying Docker internal files and directories
+
+ls /var/lib/docker/volumes/  
+# ✅ What it does: Lists all Docker volumes stored on the host  
+# 🧠 Why it matters: Helps identify volumes, including their names and data locations
+
+ls /var/lib/docker/volumes/js-app_mongo-data/  
+# ✅ What it does: Lists the specific content of the volume "js-app_mongo-data", showing actual data files stored by MongoDB  
+# 🧠 Why it matters: Confirms persistent volume data storage for your MongoDB instance
+
+# ------------------------------  
+# 🧩 SECTION TITLE: View Running Docker Containers  
+# ------------------------------  
+docker ps  
+# ✅ What it does: Shows all currently running Docker containers along with their IDs, names, and statuses  
+# 🧠 Why it matters: Helps find container IDs for executing commands inside specific containers  
+# 🔄 Equivalent PowerShell: Same command works identically in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Access a Running Container’s Shell  
+# ------------------------------  
+ docker exec -it d3d72c211f7c sh  
+# ✅ What it does: Opens an interactive Bash shell inside the container with ID "21077129356b" (replace with your container ID)  
+# 🧠 Why it matters: Allows you to inspect and interact with the container’s filesystem and processes directly  
+# 🔄 Equivalent Linux/bash command:  
+# docker exec -it 21077129356b bash  
+# Explanation: `winpty` is used in Windows Git Bash to enable interactive terminal support; not needed on Linux/macOS
+
+# ------------------------------  
+# 🧩 SECTION TITLE: List MongoDB Data Directory Inside Container  
+# ------------------------------  
+ls /data/db/  
+# ✅ What it does: Lists files inside the MongoDB data directory within the container  
+# 🧠 Why it matters: Verifies that MongoDB data files are present and persisted inside the container's mounted volume  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - The `--privileged` flag gives the container extended Linux capabilities — use carefully for security reasons.  
+# - `nsenter` requires you to target the host's PID 1 to enter its namespaces; this lets you see host-level resources.  
+# - Replace "21077129356b" with your actual running container ID from `docker ps`.  
+# - Use `winpty` on Windows Git Bash to properly handle interactive sessions with Docker CLI.  
+# - Docker stores volumes under `/var/lib/docker/volumes/` by default unless configured otherwise.  

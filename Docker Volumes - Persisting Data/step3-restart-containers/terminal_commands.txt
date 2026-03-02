@@ -1,0 +1,44 @@
+# 📦 SUMMARY  
+# These commands stop and remove running Docker containers and then start them again based on the docker-compose.yaml configuration.  
+# Language/Platform: Docker Compose CLI (Linux/bash & PowerShell)  
+# What you'll learn: How to cleanly stop containers and restart your multi-container app environment  
+# Outcome: All containers defined in the Compose file are stopped and removed, then recreated and started fresh  
+# Why this matters: Useful for resetting your environment, applying config changes, or freeing resources  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Stop and Remove Containers  
+# ------------------------------  
+docker-compose down  
+# ✅ What it does: Stops all running containers defined in your Docker Compose file and removes them along with default networks  
+# 🧠 Why it matters: Cleans up resources and stops the app environment safely so you can restart or update it without conflicts  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Start Containers  
+# ------------------------------  
+docker-compose up  
+# ✅ What it does: Creates and starts all containers defined in the Docker Compose file, attaching to their output in the terminal  
+# 🧠 Why it matters: Boots up your full application stack in the foreground so you can see logs and interact with it  
+
+# ------------------------------  
+# ▶️ HOW TO RUN / EXECUTE THIS CODE  
+# ------------------------------  
+# Stop and remove containers:  
+docker-compose down  
+# ✅ What it does: Stops and removes all containers and networks for your app  
+# 🧠 Why it matters: Prevents resource conflicts and lets you start fresh  
+# 🔄 Equivalent PowerShell command: Same command used as-is in PowerShell  
+
+# Start containers and attach to logs:  
+docker-compose up  
+# ✅ What it does: Starts containers and shows their combined logs in your terminal window  
+# 🧠 Why it matters: Useful for debugging and monitoring your application as it runs  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Use `docker-compose up -d` to start containers in detached mode (in background).  
+# - `docker-compose down` will remove anonymous volumes but keep named volumes by default.  
+# - To also remove named volumes, use `docker-compose down -v`.  
+# - Running `docker-compose up` without `-d` blocks the terminal; use Ctrl+C to stop.  
+# - Ensure Docker daemon/service is running before executing these commands.  

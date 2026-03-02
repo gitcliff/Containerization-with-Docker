@@ -1,0 +1,74 @@
+# 📦 SUMMARY  
+# This script runs a multi-container Docker application, installs necessary Node.js dependencies, and starts a Node.js server.  
+# Language/Platform: Docker, Bash/PowerShell, Node.js  
+# What you'll learn: Running Docker Compose, navigating directories, installing npm packages, running a Node.js server  
+# Outcome: Docker containers start in the background, the app dependencies are installed, and the server runs  
+# Why this matters: Automates deployment and local setup of containerized applications with backend code, enabling easy development and testing  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Start Docker Containers  
+# ------------------------------  
+docker-compose -f .\docker-compose.yaml up -d  
+# ✅ What it does: Starts Docker containers defined in the docker-compose.yaml file in detached mode (runs in the background)  
+# 🧠 Why it matters: Ensures all app services defined in Docker run simultaneously without blocking your terminal  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Navigate to Application Directory  
+# ------------------------------  
+cd .\app\  
+# ✅ What it does: Changes the current directory to the 'app' folder where the Node.js application code resides  
+# 🧠 Why it matters: Ensures the following commands run in the right context where package.json and server.js are located  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Install Node.js Dependencies  
+# ------------------------------  
+npm install  
+# ✅ What it does: Installs all Node.js dependencies listed in package.json  
+# 🧠 Why it matters: Required to run the Node.js application without missing modules or errors  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Run the Node.js Server  
+# ------------------------------  
+node .\server.js  
+# ✅ What it does: Starts the Node.js server by executing server.js  
+# 🧠 Why it matters: Runs the backend server to handle requests and serve the application  
+
+# ------------------------------  
+# ▶️ HOW TO RUN / EXECUTE THIS CODE  
+# ------------------------------  
+# Docker Compose command:  
+docker-compose -f .\docker-compose.yaml up -d  
+# ✅ What it does: Launches containers in the background based on your Docker Compose file  
+# 🧠 Why it matters: Starts the environment needed for your app to run  
+# 🔄 Equivalent PowerShell command explanation: Same command works in PowerShell; ensure Docker is installed and running
+
+# Change directory:  
+cd .\app\  
+# ✅ What it does: Navigates to your app folder where Node.js code is  
+# 🧠 Why it matters: Commands that follow expect you to be inside this directory  
+# 🔄 Equivalent Linux/bash command:  
+# cd ./app/  
+# Explanation: Both change the current directory; Windows uses backslash `\` while Linux uses forward slash `/`
+
+# Install dependencies:  
+npm install  
+# ✅ What it does: Downloads and installs node modules specified in package.json  
+# 🧠 Why it matters: Prepares the environment so your Node.js app can run properly  
+# 🔄 Equivalent PowerShell command explanation: Same command works the same in PowerShell and Linux bash
+
+# Run Node.js server:  
+node .\server.js  
+# ✅ What it does: Executes your Node.js application entry point  
+# 🧠 Why it matters: Starts the server that handles app logic and network requests  
+# 🔄 Equivalent Linux/bash command:  
+# node ./server.js  
+# Explanation: Same command, just path separator differs between OS  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Ensure Docker Desktop or Docker Engine is installed and running before running docker-compose.  
+# - Use `docker-compose down` to stop and remove containers when done.  
+# - If npm install fails, check if Node.js and npm are installed (`node -v` and `npm -v`).  
+# - Paths use backslashes (`\`) in Windows; for Linux/macOS, replace with forward slashes (`/`).  
+# - Running `node server.js` directly assumes no other process manager like nodemon or pm2 is needed for dev or production use.  
