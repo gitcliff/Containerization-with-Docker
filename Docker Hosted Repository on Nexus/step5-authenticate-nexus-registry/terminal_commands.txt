@@ -1,0 +1,35 @@
+# 📦 SUMMARY  
+# These commands log in to a private Docker registry running at `<your-server-ip>:8083`, using either interactive password input or piping a password securely.  
+# Language/Platform: Bash (Linux/macOS) and PowerShell (Windows)  
+# What you'll learn: Logging into a private Docker registry interactively and via stdin for scripting  
+# Outcome: Docker CLI authenticates with the private registry so you can push/pull images  
+# Why this matters: Essential for accessing private registries where credentials are required  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Interactive Login to Docker Registry  
+# ------------------------------  
+docker login <your-server-ip>:8083  
+# ✅ What it does: Prompts you to enter a username and password interactively to authenticate against a private registry at <your-server-ip>:8083  
+# 🧠 Why it matters: Grants access to private Docker images hosted on your registry so you can pull/push images  
+# 🔄 Equivalent PowerShell command:  
+# docker login <your-server-ip>:8083  
+# Explanation: Works identically in PowerShell; prompts for username and password interactively  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Non-Interactive Login Using Password from stdin  
+# ------------------------------  
+echo '<your-password>' | docker login <your-server-ip>:8083 --username chad --password-stdin  
+# ✅ What it does: Pipes your password securely into `docker login`, avoiding plain-text password exposure in the shell history  
+# 🧠 Why it matters: Best practice for automation scripts and CI/CD pipelines to keep credentials secure  
+# 🔄 Equivalent PowerShell command:  
+# '<your-password>' | docker login <your-server-ip>:8083 --username chad --password-stdin  
+# Explanation: PowerShell supports piping the password string into Docker the same way; replace `<your-password>` with your actual password securely  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Replace `<your-server-ip>` with the actual IP address or domain of your private Docker registry.  
+# - Replace `<your-password>` with your real password, or store it securely (e.g., in an environment variable or secret manager).  
+# - `--password-stdin` is safer than `--password <pwd>` because it avoids showing the password in process lists or shell history.  
+# - To log out later, run `docker logout <your-server-ip>:8083`.  
+# - Ensure your private registry is reachable (check with `curl http://<your-server-ip>:8083/v2/_catalog` or `ping <your-server-ip>`).  

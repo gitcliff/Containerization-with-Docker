@@ -1,0 +1,42 @@
+# 📦 SUMMARY  
+# These commands restart the Docker service on Linux and Windows, then check Docker's system-wide status and configuration details.  
+# Language/Platform: Bash (Linux) and PowerShell (Windows)  
+# What you'll learn: Restarting Docker engine, viewing Docker system info  
+# Outcome: Docker engine restarts, and system information like version, storage driver, and running containers is displayed  
+# Why this matters: Restarting Docker is useful when applying configuration changes or resolving daemon issues  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Restart Docker Service on Linux  
+# ------------------------------  
+sudo systemctl restart docker  
+# ✅ What it does: Stops and then starts the Docker service on Linux systems using systemd  
+# 🧠 Why it matters: Applies any configuration changes and resolves issues with a stuck Docker daemon  
+# 🔄 Equivalent PowerShell command:  
+# Restart-Service docker  
+# Explanation: Restarts the Docker service in Windows using PowerShell’s `Restart-Service` cmdlet for Docker Desktop or Docker Engine  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Restart Docker Service on Windows PowerShell  
+# ------------------------------  
+Restart-Service docker  
+# ✅ What it does: Restarts the Docker Desktop or Docker Engine service in Windows  
+# 🧠 Why it matters: Useful after updating Docker settings or recovering from errors without rebooting the system  
+# 🔄 Equivalent Linux/bash command:  
+# sudo systemctl restart docker  
+# Explanation: Does the same for Linux systems using systemd  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: View Docker System Information  
+# ------------------------------  
+docker info  
+# ✅ What it does: Displays detailed information about the Docker installation, including version, storage driver, number of containers/images, and system resource usage  
+# 🧠 Why it matters: Helps verify Docker is running properly and gives insight into its current state  
+# 🔄 Equivalent PowerShell command: Same `docker info` command works identically in PowerShell  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Use `sudo systemctl status docker` (Linux) or `Get-Service docker` (Windows) to check Docker service status before/after restart.  
+# - Restarting the Docker daemon can stop all running containers — use `docker start <container>` to restart them afterwards.  
+# - `docker info` is useful for diagnosing issues like volume driver problems or low disk space warnings.  
+# - On WSL2-based Docker Desktop, restarting Docker may also restart the WSL2 backend.  

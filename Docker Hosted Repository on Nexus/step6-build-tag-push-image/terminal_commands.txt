@@ -1,0 +1,45 @@
+# 📦 SUMMARY  
+# These commands build a Docker image locally, tag it for a private registry, and push it to Nexus Repository running at `<your-nexus-ip>:8083`.  
+# Language/Platform: Bash (Linux/macOS) and PowerShell (Windows)  
+# What you'll learn: Building Docker images, tagging for a private registry, and pushing to a remote repository  
+# Outcome: The image `my-app:1.3` is created locally and uploaded to the Nexus private Docker registry  
+# Why this matters: Enables sharing and deployment of containerized applications across your team or servers securely  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Build Docker Image Locally  
+# ------------------------------  
+docker build -t my-app:1.3 .  
+# ✅ What it does: Builds a Docker image from the Dockerfile in the current directory (`.`) and tags it as `my-app:1.3`  
+# 🧠 Why it matters: Creates a reusable, versioned container image that can run anywhere Docker is supported  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Tag Image for Private Registry  
+# ------------------------------  
+docker tag my-app:1.3 <your-nexus-ip>:8083/my-app:1.3  
+# ✅ What it does: Creates a new tag pointing to your private Nexus registry at `<your-nexus-ip>:8083`, preparing it for upload  
+# 🧠 Why it matters: Docker images must include the registry address in their tag to push to a private registry  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Push Image to Nexus Private Registry  
+# ------------------------------  
+docker push <your-nexus-ip>:8083/my-app:1.3  
+# ✅ What it does: Uploads the tagged image to the private Docker registry running on Nexus Repository Manager  
+# 🧠 Why it matters: Makes the image available to others for pulling and running from the private registry  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Replace `<your-nexus-ip>` with your actual Nexus Repository IP or domain.  
+# - Ensure you are logged in to the Nexus Docker registry (`docker login <your-nexus-ip>:8083`) before pushing.  
+# - Verify your Nexus Docker repository is set up for v2 API and allows push operations.  
+# - If using HTTPS with a self-signed certificate, Docker may require adding the registry to insecure registries in `/etc/docker/daemon.json`:  
+#   ```json
+#   {
+#     "insecure-registries": ["<your-nexus-ip>:8083"]
+#   }
+#   ```  
+#   Then restart Docker (`sudo systemctl restart docker` or `Restart-Service docker`).  
+# - Use semantic versioning (e.g., `1.3.0`) or tags like `latest` for clarity.  
