@@ -1,0 +1,45 @@
+# 📦 SUMMARY  
+# These commands create a persistent Docker volume to store Nexus repository data, run a Nexus container exposing port 8081, and verify the container and port status.  
+# Language/Platform: Bash (Linux/macOS) and PowerShell (Windows)  
+# What you'll learn: Creating Docker volumes for data persistence, running containers with volume mounts and port mapping, checking container and network status  
+# Outcome: A Nexus Repository Manager instance runs in Docker with data stored persistently outside the container  
+# Why this matters: Ensures your Nexus data survives container restarts and enables access to Nexus UI via mapped ports  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Create Persistent Docker Volume  
+# ------------------------------  
+docker volume create --name nexus-data  
+# ✅ What it does: Creates a named Docker volume called "nexus-data" to store Nexus data persistently on the host  
+# 🧠 Why it matters: Keeps Nexus data safe even if the container is removed or recreated  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Run Nexus Container with Port Mapping and Volume  
+# ------------------------------  
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3  
+# ✅ What it does: Runs the Nexus container in detached mode (`-d`), mapping host port 8081 to container port 8081, naming it "nexus", and mounting the persistent volume to `/nexus-data` inside the container  
+# 🧠 Why it matters: Allows Nexus to be accessible at port 8081 on the host and stores data persistently on disk  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Verify Nexus Container and Network Listening  
+# ------------------------------  
+netstat -lnpt  
+# ✅ What it does: Lists all listening network ports with associated processes (Linux) to verify port 8081 is active  
+# 🧠 Why it matters: Confirms that Nexus is listening and accessible on the expected port  
+# 🔄 Equivalent PowerShell command:  
+# Get-NetTCPConnection -LocalPort 8081  
+# Explanation: Lists TCP connections listening on port 8081 in Windows PowerShell  
+
+docker ps  
+# ✅ What it does: Lists all running Docker containers to verify that the Nexus container is running  
+# 🧠 Why it matters: Quick check to ensure Nexus container is up and healthy  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - The named volume `nexus-data` ensures data persists beyond the container lifecycle.  
+# - If port 8081 is in use, choose a different host port or stop the conflicting service.  
+# - To stop Nexus, run `docker stop nexus` and remove with `docker rm nexus` if needed.  
+# - Use `docker logs nexus` to view Nexus startup logs if issues arise.  

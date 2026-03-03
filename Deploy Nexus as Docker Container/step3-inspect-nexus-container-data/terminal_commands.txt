@@ -1,0 +1,45 @@
+# 📦 SUMMARY  
+# These commands let you open a shell inside the running Nexus container, check the current user inside it, list all Docker volumes on the host, and inspect detailed info about the Nexus data volume.  
+# Language/Platform: Bash (Linux/macOS) and PowerShell (Windows)  
+# What you'll learn: Using `docker exec` to interact with containers, managing Docker volumes, inspecting volume details  
+# Outcome: You can explore the container environment, confirm user context, and understand where and how Docker stores persistent data  
+# Why this matters: Useful for troubleshooting, verifying permissions, and managing persistent storage for Docker containers  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Access Shell Inside Running Container  
+# ------------------------------  
+docker exec -it 31976ea75909 /bin/bash  
+# ✅ What it does: Opens an interactive terminal session inside the container with ID `31976ea75909` using the bash shell  
+# 🧠 Why it matters: Enables direct access to the container’s filesystem and environment for debugging or manual configuration  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Check Current User Inside Container  
+# ------------------------------  
+whoami  
+# ✅ What it does: Prints the username of the current user inside the container shell session  
+# 🧠 Why it matters: Helps verify if you have root or a limited user inside the container, which affects permissions and command availability  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: List All Docker Volumes on Host  
+# ------------------------------  
+docker volume ls  
+# ✅ What it does: Lists all Docker volumes currently created on the host machine  
+# 🧠 Why it matters: Helps identify volumes available for containers and their names for inspection or cleanup  
+# 🔄 Equivalent PowerShell command: Same command works in PowerShell  
+
+# ------------------------------  
+# 🧩 SECTION TITLE: Inspect Specific Docker Volume Details  
+# ------------------------------  
+docker inspect nexus-data  
+# ✅ What it does: Shows detailed JSON output describing the `nexus-data` volume’s configuration, including mountpoint path on the host  
+# 🧠 Why it matters: Useful to find the exact location of volume data on disk and metadata useful for troubleshooting or backup  
+
+# ------------------------------  
+# ✅ NOTES / GOTCHAS / TIPS  
+# ------------------------------  
+# - Replace `31976ea75909` with your actual Nexus container ID or name (`docker ps` shows this).  
+# - Use `exit` to leave the container shell session.  
+# - Inspecting volumes helps when migrating data or cleaning up unused volumes.  
+# - Volume mount paths differ by OS and Docker storage driver.  
+# - Always be cautious when modifying volume data directly to avoid corruption.  
