@@ -102,12 +102,3 @@ docker exec -it <container-id> /bin/sh
 3. If you want persistence examples, open [Docker Volumes - Persisting Data/README.md](Docker%20Volumes%20-%20Persisting%20Data/README.md).
 4. If deploying to a server or using registries, check [Deploy docker application on a server/README.md](Deploy%20docker%20application%20on%20a%20server/README.md) and [Docker Hosted Repository on Nexus/README.md](Docker%20Hosted%20Repository%20on%20Nexus/README.md).
 
-**Need help or changes?**
-
-If you'd like, I can:
-
-- open and expand any specific folder README into a more detailed tutorial,
-- run or test one of the sample apps locally and share the steps/output,
-- or generate a short cheatsheet extracted from all `docker_commands.md` files.
-
-Tell me which folder you'd like me to expand or test next.
