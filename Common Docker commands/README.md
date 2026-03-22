@@ -4,7 +4,7 @@
 
 # 📖 Summary
 
-Worked on **Lab 5 - Main Docker Commands**, focusing on **Docker CLI for container management and port binding**.
+Worked on **Lab - Main Docker Commands**, focusing on **Docker CLI for container management and port binding**.
 Tasks included **pulling Docker images, running containers in foreground and detached modes, stopping/restarting containers, and exposing container ports to the host system** to solve **challenges of managing container lifecycles and enabling external access to containerized services**.
 Set up **Docker on a local system** to automate and optimize container management, aiming to **build confidence in controlling containerized applications—a key skill in DevOps pipelines**.
 
